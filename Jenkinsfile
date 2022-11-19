@@ -24,7 +24,7 @@ pipeline{
         stage("build image"){
             steps{
                 script{
-                    buildImage 'azelmazel/java-maven:3.0'
+                    buildImage('azelmazel/java-maven:3.0')
                 }
             }
         }
