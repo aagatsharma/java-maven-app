@@ -3,12 +3,12 @@ def buildJar() {
     sh "mvn package"
 } 
 
-def buildImage(String imageName) {
+def buildImage() {
     echo "building the docker images......"
     withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
-        sh "docker build -t $imageName ."
+        sh 'docker build -t azelmazel/java-maven:2.0 .'
         sh "echo $PASS | docker login -u $USER --password-stdin"
-        sh "docker push $imageName"
+        sh 'docker push azelmazel/java-maven:2.0'
     }
 } 
 
