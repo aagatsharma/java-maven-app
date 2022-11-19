@@ -1,4 +1,6 @@
-@Library('jenkins-shared-lib')
+library identifier:'jenkins-shared-library@main', retriever:modernSCM(
+    [$class:'GitSCMSource',remote:'https://github.com/aagatsharma/jenkins-shared-library.git',credentialsId:'github-creds']
+)
 def gv
 
 pipeline{
