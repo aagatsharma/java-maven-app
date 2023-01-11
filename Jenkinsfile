@@ -47,7 +47,7 @@ pipeline{
         // stage("Commit Version Change"){
         //     steps{
         //         script{
-                    
+                        // git clone www.google.com 
         //         }
         //     }
         // }
