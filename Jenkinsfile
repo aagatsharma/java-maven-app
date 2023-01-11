@@ -16,17 +16,24 @@ pipeline{
                 }
             }
         }
-        stage("build jar"){
+        stage("Increment version"){
             steps{
                 script{
-                    buildJar()
+                    gv.incrementapp()
+                }
+            }
+        }
+        stage("build app"){
+            steps{
+                script{
+                    gv.buildJar()
                 }
             }
         }
         stage("build image"){
             steps{
                 script{
-                    buildImage ('azelmazel/java-maven:3.0')
+                    gv.buildImage(env.IMAGE_NAME)
                 }
             }
         }
@@ -37,5 +44,12 @@ pipeline{
                 }
             }
         }
+        // stage("Commit Version Change"){
+        //     steps{
+        //         script{
+                    
+        //         }
+        //     }
+        // }
     }
 }

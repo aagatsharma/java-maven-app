@@ -1,19 +1,34 @@
+def incrementapp() {
+    echo 'Incrementing app version'
+    sh 'mvn build-helper:parse-version versions:set -DnewVersion=\\\${parsedVersion.majorVersion}.\\\${parsedVersion.minorVersion}.\\\${parsedVersion.nextIncrementalVersion} versions:commit'
+    def matcher = readfile('pom.xml')=~ '<version>(.+)</version>'
+    def vision = matcher[0][1]
+    env.IMAGE_NAME = "$version-$BUILD_NUMBER"
+}
+
+
 def buildJar() {
     echo "building the application..."
-    sh "mvn package"
-} 
+    sh "mvn clean package"
+}
+
+def dockerLogin(){
+    sh 'echo Logging in to docker'
+    withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+        sh "echo $PASS | docker login -u $USER --password-stdin"
+    }
+}
 
 def buildImage() {
     echo "building the docker images......"
-    withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
-        sh 'docker build -t azelmazel/java-maven:2.0 .'
-        sh "echo $PASS | docker login -u $USER --password-stdin"
-        sh 'docker push azelmazel/java-maven:2.0'
-    }
+    sh 'docker build -t azelmazel/java-maven:${IMAGE_NAME} .'
+    dockerLogin()
+    sh 'docker push azelmazel/java-maven:${IMAGE_NAME}'
 } 
 
 def deployApp() {
     echo 'deploying the application...'
 } 
+
 
 return this
