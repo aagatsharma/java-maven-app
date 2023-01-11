@@ -22,9 +22,9 @@ def dockerLogin(){
 
 def buildImage() {
     echo "building the docker images......"
-    sh 'docker build -t azelmazel/java-maven:$IMAGE_NAME .'
+    sh "docker build -t azelmazel/java-maven:${IMAGE_NAME} ."
     dockerLogin()
-    sh 'docker push azelmazel/java-maven:$IMAGE_NAME'
+    sh "docker push azelmazel/java-maven:${IMAGE_NAME}"
 } 
 
 def deployApp() {
