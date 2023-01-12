@@ -40,7 +40,6 @@ def gitbump(){
 
 def deployApp() {
     echo 'deploying the application...'
-    echo 'hello'
 } 
 
 
