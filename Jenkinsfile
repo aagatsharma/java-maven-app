@@ -44,6 +44,13 @@ pipeline{
                 }
             }
         }
+        stage("deploy application"){
+            steps{
+                script{
+                    gv.gitbump()
+                }
+            }
+        }
         // stage("Commit Version Change"){
         //     steps{
         //         script{
