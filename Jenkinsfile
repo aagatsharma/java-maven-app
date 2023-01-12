@@ -14,7 +14,7 @@ pipeline{
                 script{
                     gv = load "script.groovy"
                 }
-            }
+            } 
         }
         stage("Increment version"){
             steps{
@@ -44,7 +44,7 @@ pipeline{
                 }
             }
         }
-        stage("deploy application"){
+        stage("Commit version change git"){
             steps{
                 script{
                     gv.gitbump()
