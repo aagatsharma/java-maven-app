@@ -39,7 +39,7 @@ def gitbump(){
 }
 
 def deployApp() {
-    echo 'deploying the application...'
+    echo 'deploying the application to the AWS...'
 } 
 
 return this
