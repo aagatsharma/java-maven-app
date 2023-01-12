@@ -34,7 +34,7 @@ def gitbump(){
         sh "git remote set-url origin https://${USER}:${PASS}@github.com/aagatsharma/java-maven-app.git"
         sh 'git add .'
         sh 'git commit -m "CI:Version Bump"'
-        sh 'git push'
+        sh 'git push origin HEAD:jenkins-shared-library'
     }
 }
 
