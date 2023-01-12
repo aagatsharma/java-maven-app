@@ -25,7 +25,18 @@ def buildImage() {
     sh "docker build -t azelmazel/java-maven:${IMAGE_NAME} ."
     dockerLogin()
     sh "docker push azelmazel/java-maven:${IMAGE_NAME}"
-} 
+}
+
+def gitbump(){
+    withCredentials([usernamePassword(credentialsId: 'github-creds', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+        sh 'git config --global user.email "jenkins@jenkins.com"'
+        sh 'git config --global user.name "jenkins"'
+        sh "git remote set-url origin https://${USER}:${PASS}@github.com/aagatsharma/java-maven-app"
+        sh 'git add .'
+        sh 'git commit -m "CI:Version Bump"'
+        sh 'git push origin HEAD:jenkins-shared-library'
+    }
+}
 
 def deployApp() {
     echo 'deploying the application...'
